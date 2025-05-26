@@ -181,4 +181,80 @@ class Solution {
     }
 }
 
+# Insert in sorted circular linked list
+
+class Node1 {
+    int data;
+    Node next;
+
+    Node1(int data) {
+        this.data = data;
+        this.next = null;
+    }
+}
+
+class Solution {
+    public Node sortedInsert(Node head, int data) {
+        Node newNode = new Node(data);
+        if (head == null) {
+            newNode.next = newNode;
+            return newNode;
+        }
+
+        Node current = head;
+        while (true) {
+            if (current.data <= data && data <= current.next.data) {
+                // Insert between current and current.next
+                break;
+            }
+            if (current.data > current.next.data) {
+                if (data >= current.data || data <= current.next.data) {
+                    break;
+                }
+            }
+
+            current = current.next;
+            if (current == head) {
+                break;
+            }
+        }
+
+        newNode.next = current.next;
+        current.next = newNode;
+        return (data < head.data) ? newNode : head;
+    }
+
+    public void printList(Node head) {
+        if (head == null) return;
+
+        Node temp = head;
+        do {
+            System.out.print(temp.data);
+            temp = temp.next;
+            if (temp != head) System.out.print("->");
+        } while (temp != head);
+        System.out.println();
+    }
+}
+
+ class Main {
+    public static void main(String[] args) {
+        Solution list = new Solution();
+        Node head = new Node(1);
+        Node second = new Node(2);
+        Node third = new Node(4);
+        head.next = second;
+        second.next = third;
+        third.next = head;
+
+        System.out.print("Original List: ");
+        list.printList(head);
+
+        int data = 2;
+        head = list.sortedInsert(head, data);
+
+        System.out.print("After Inserting " + data + ": ");
+        list.printList(head);
+    }
+}
 
