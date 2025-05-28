@@ -258,3 +258,153 @@ class Solution {
     }
 }
 
+# Perfect Sum Problem
+
+class Solution {
+        public int helper(int[] nums,int idx,int target,int sum){
+            if(idx==nums.length){
+                return sum==target ? 1:0;
+            }
+            int include=helper(nums,idx+1,target,sum+nums[idx]);
+            int exclude=helper(nums,idx+1,target,sum);
+            return include+exclude;
+        }
+        public int perfectSum(int[] nums, int target) {
+            return helper(nums,0,target,0);
+        }
+    }
+
+# Find rectangle with corners as 1
+
+class Solution {
+    public boolean ValidCorner(int mat[][]) {
+        // Code here
+        int n=mat.length;
+        int m=mat[0].length;
+        for(int i=0;i<n;i++){
+            for(int j=0;j<m;j++){
+                if(mat[i][j]==1){
+                    for(int c=j+1;c<m;c++){
+                        if(mat[i][c]==1){
+                            for(int r=i+1;r<n;r++){
+                                if(mat[r][c]==1 && mat[r][j]==1){
+                                    return true;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        return false;
+    }
+}
+
+# Prime Number
+
+class Solution {
+    public static void main(String[] args) {
+        int n = 7;
+        boolean isPrime = isPrime(n);
+        System.out.println("Input: n = " + n);
+        System.out.println("Output: " + isPrime);
+        if (isPrime) {
+            System.out.println("Explanation: " + n + " has exactly two divisors: 1 and " + n + ", making it a prime number.");
+        } else {
+            System.out.println("Explanation: " + n + " is not a prime number.");
+        }
+    }
+
+    static boolean isPrime(int n) {
+        if (n <= 1) {
+            return false;
+        }
+        for (int i = 2; i <= Math.sqrt(n); i++) {
+            if (n % i == 0) {
+                return false;
+            }
+        }
+        return true;
+    }
+}
+
+# Sieve of Eratosthenes
+
+// User function Template for Java
+class Solution {
+    static ArrayList<Integer> sieveOfEratosthenes(int n) {
+        // code here
+        boolean []primes=new boolean[n+1];
+        ArrayList<Integer> res=new ArrayList<>();
+        Arrays.fill(primes,true);
+        primes[0]=primes[1]=false;
+        for(int i=2;i<=n;i++){
+            if(primes[i]==true){
+                for(int j=2*i;j<=n;j+=i){
+                    primes[j]=false;
+                }
+            }
+        }
+        for(int i=0;i<n+1;i++){
+            if(primes[i]==true){
+                res.add(i);
+            }
+        }
+        return res;
+    }
+}
+
+# GCD of two numbers
+
+
+class Solution {
+    public static int gcd(int a, int b) {
+        // code here
+        while(b!=0){
+            int temp=a%b;
+            a=b;
+            b=temp;
+        }
+        return a;
+    }
+}
+
+# LCM And GCD
+
+class Solution {
+    public static int[] lcmAndGcd(int a, int b) {
+        // code here
+        int prod=a*b;
+        while(b!=0){
+            int temp=a%b;
+            a=b;b=temp;
+        }
+        int gcd=a;
+        int lcm=prod/gcd;
+        return new int[] {lcm,gcd};
+    }
+}
+
+# Pascal Triangle
+
+// User function Template for Java
+
+class Solution {
+
+    ArrayList<Integer> nthRowOfPascalTriangle(int n) {
+        // code here
+        ArrayList<Integer> prev=new ArrayList<>();
+        ArrayList<Integer> cur=new ArrayList<>();
+        prev.add(1);
+        for(int i=1;i<n;i++){
+            cur=new ArrayList<>();
+            cur.add(1);
+            for(int j=1;j<i;j++){
+                cur.add(prev.get(j-1)+prev.get(j));
+            }
+            cur.add(1);
+            prev=cur;
+        }
+        return prev;
+    }
+}
